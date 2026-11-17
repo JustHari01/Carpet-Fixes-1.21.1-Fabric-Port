@@ -1,0 +1,19 @@
+accessWidener	v1	 named
+extendable class net/minecraft/entity/projectile/FishingBobberEntity$State
+accessible field net/minecraft/entity/ItemEntity pickupDelay I
+accessible field net/minecraft/block/CarvedPumpkinBlock ironGolemDispenserPattern Lnet/minecraft/block/pattern/BlockPattern;
+accessible field net/minecraft/block/CarvedPumpkinBlock ironGolemPattern Lnet/minecraft/block/pattern/BlockPattern;
+accessible field net/minecraft/entity/boss/dragon/EnderDragonFight dragonSpawnState Lnet/minecraft/entity/boss/dragon/EnderDragonSpawnState;
+accessible field net/minecraft/entity/Entity portalCooldown I
+accessible field net/minecraft/entity/mob/CreeperEntity lastFuseTime I
+accessible field net/minecraft/entity/mob/CreeperEntity currentFuseTime I
+accessible field net/minecraft/entity/LivingEntity activeStatusEffects Ljava/util/Map;
+accessible class net/minecraft/server/world/ChunkTicketManager$TicketDistanceLevelPropagator
+accessible method net/minecraft/server/world/ChunkTicket isExpired (J)Z
+accessible method net/minecraft/world/ChunkPosDistanceLevelPropagator updateLevel (JIZ)V
+extendable method net/minecraft/entity/projectile/PersistentProjectileEntity fall ()V
+accessible class net/minecraft/world/chunk/PaletteResizeListener
+accessible method net/minecraft/world/chunk/ArrayPalette <init> (Lnet/minecraft/util/collection/IndexedIterable;[Ljava/lang/Object;Lnet/minecraft/world/chunk/PaletteResizeListener;II)V
+accessible method net/minecraft/world/chunk/BiMapPalette <init> (Lnet/minecraft/util/collection/IndexedIterable;ILnet/minecraft/world/chunk/PaletteResizeListener;Lnet/minecraft/util/collection/Int2ObjectBiMap;)V
+accessible field net/minecraft/block/AbstractPressurePlateBlock blockSetType Lnet/minecraft/block/BlockSetType;
+extendable method net/minecraft/entity/LivingEntity canBreatheInWater ()Z

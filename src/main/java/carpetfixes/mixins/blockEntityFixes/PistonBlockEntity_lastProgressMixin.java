@@ -1,0 +1,67 @@
+package carpetfixes.mixins.blockEntityFixes;
+
+import carpetfixes.CFSettings;
+import net.minecraft.block.entity.PistonBlockEntity;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+/**
+ * Fixes pistons loading with the incorrect progress due to a missing tag
+ */
+@Mixin(PistonBlockEntity.class)
+public class PistonBlockEntity_lastProgressMixin {
+
+    @Shadow
+    private float lastProgress;
+
+    @Shadow
+    private float progress;
+
+
+    @Inject(
+            method = "readNbt",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/nbt/NbtCompound;getBoolean(Ljava/lang/String;)Z",
+                    shift = At.Shift.BEFORE,
+                    ordinal = 0
+            )
+    )
+    private void cf$getLastProgress(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup, CallbackInfo ci) {
+        if (CFSettings.pistonReloadInconsistencyFix) {
+            this.lastProgress = nbt.getFloat("lastProgress");
+        }
+    }
+
+
+    @ModifyConstant(
+            method = "writeNbt",
+            constant = @Constant(stringValue = "progress")
+    )
+    private String cf$setLastProgress(String constant) {
+        return CFSettings.pistonReloadInconsistencyFix ? "lastProgress" : constant;
+    }
+
+
+    @Inject(
+            method = "writeNbt",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/nbt/NbtCompound;putFloat(Ljava/lang/String;F)V",
+                    shift = At.Shift.BEFORE,
+                    ordinal = 0
+            )
+    )
+    private void cf$setProgress(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup, CallbackInfo ci) {
+        if (CFSettings.pistonReloadInconsistencyFix) {
+            nbt.putFloat("progress", this.progress);
+        }
+    }
+}
